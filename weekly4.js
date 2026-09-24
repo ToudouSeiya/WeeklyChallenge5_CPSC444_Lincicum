@@ -253,8 +253,13 @@ function draw(mesh, model, color)
     gl.drawArrays(gl.TRIANGLES, 0, mesh.count);
 }
 
+
+let theta = 0;
+
 function render()
 {
+    requestAnimationFrame(render);
+
     const ratio = window.devicePixelRatio || 1;
     canvas.width = Math.max(1, Math.floor(window.innerWidth * ratio));
     canvas.height = Math.max(1, Math.floor(window.innerHeight * ratio));
@@ -273,16 +278,20 @@ function render()
         perspective(canvas.width / canvas.height)
     );
     //light location
+    theta += 0.1;
     gl.uniform3f(
         uniforms.lightDirection,
-        0.5,
+        Math.cos(theta),
         0.2,
-        0.5
+        Math.sin(theta)
     );
     //color of the light
-    gl.uniform3f(uniforms.lightColor, 1, 0.3, 0.1);
+    let r = Math.abs(Math.sin(theta * 0.2));
+    let g = Math.abs(Math.cos(theta * 0.3));  
+    let b = Math.abs(Math.cos(theta * 0.4));  
+    gl.uniform3f(uniforms.lightColor, r, g, b);
     //ambient strength
-    gl.uniform1f(uniforms.ambient, 0.05);
+    gl.uniform1f(uniforms.ambient, 0.8);
     draw(ground, identity(), [0.35, 0.38, 0.42]);
     draw(cube, transform(-2.5, 1, 0, 1, 0), [0.9, 0.25, 0.2]);
     draw(cube, transform(2.5, 1, 0, 1, 0), [0.2, 0.45, 0.95]);
