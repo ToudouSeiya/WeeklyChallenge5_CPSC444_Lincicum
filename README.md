@@ -1,4 +1,5 @@
-# WebGL Weekly 4
+# WebGL Weekly Challenge 5
+Morgan Lincicum
 
 A static WebGL lighting scene built with plain HTML, GLSL, and JavaScript.
 
